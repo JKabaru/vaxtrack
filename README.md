@@ -27,7 +27,7 @@ To install and set up VaxTrack, follow the steps below:
 
 1. Clone the Repository:
    ```
-   git clone <repository_url>
+   git clone <[https://github.com/JKabaru/VaxTrack.git])>
    ```
 
 2. Install Dependencies:
