@@ -7,6 +7,13 @@ use App\Models\VaccineType;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use PhpParser\Builder\Property;
+use App\Notifications\NewVaccineNotification;
+
+use App\Models\Country;
+use App\Models\AgeRange;
+
+use App\Models\User;
+
 
 
 class VaccineTypeController extends Controller
@@ -16,48 +23,66 @@ class VaccineTypeController extends Controller
     public function AllType()
     {
         $types= VaccineType::latest()->get();
-        return view('backend.type.all_type',compact('types'));
+        $notifications = Auth::user()->notifications;
+        $notificationCount = $notifications->count();
+        $countries = Country::all();
+        $ageranges = AgeRange::all();
+        return view('backend.type.all_type',compact('types' , 'notifications', 'notificationCount','countries','ageranges'));
     }
 
     public function AddType()
     {
-                return view('backend.type.add_type');
+        $notifications = Auth::user()->notifications;
+        $notificationCount = $notifications->count();
+        $countries = Country::all();
+        $ageranges = AgeRange::all();
+                return view('backend.type.add_type' ,compact('notifications', 'notificationCount' ,'countries','ageranges'));
     }
-
+    
     public function StoreType(Request $request)
     {
-
-        $request -> validate([
-            'name' => 'required|unique:vaccine_types|max:200',
+        $request->validate([
+            'name' => 'required|unique:vaccines|max:200',
+            'dose_number' => 'required|max:10',
             'recommended_age' => 'required',
             'side_effects' => 'required',
-            'vaccine_icon' => 'required'
+           
+            
+        ]);
+    
+        $vaccine = VaccineType::create([
+            'name' => $request->name,
+            'dose_number' => $request->dose_number,
+            'age_range_id' => $request->recommended_age,
+            'side_effects' => $request->side_effects,
+            'description' => $request->description,
+            'country_id' => $request->country,
+            'storage_requirements' => $request->storage_requirements,
+        ]);
+    
+        $doctors = User::where('role', 'doctor')->get();
+        
+        foreach ($doctors as $doctor) {
+            $doctor->notify(new NewVaccineNotification($vaccine));
+        }
+    
 
-       ]);
-
-       VaccineType::insert([
-
-        'name' => $request->name,
-        'recommended_age' => $request->recommended_age,
-        'vaccine_icon' => $request->vaccine_icon,
-        'side_effects' => $request->side_effects,
-
-       ]);
-
-       $notification = array(
-        'message' => 'Vaccine Created successfully',
-        'alert-type' => 'success'
-        );
-
+        $notification = [
+            'message' => 'Vaccine Created successfully',
+            'alert-type' => 'success',
+        ];
+    
         return redirect()->route('all.type')->with($notification);
-
-
     }
+    
+    
 
     public function EditType($id)
     {
         $types = VaccineType::findorFail($id);
-        return view('backend.type.edit_type', compact('types'));
+        $countries = Country::all();
+        $ageranges = AgeRange::all();
+        return view('backend.type.edit_type', compact('types','countries','ageranges'));
     }
 
     public function UpdateType(Request $request)
@@ -71,10 +96,14 @@ class VaccineTypeController extends Controller
 
        VaccineType::findOrFail($pid)->update([
 
-        'name' => $request->name,
-        'recommended_age' => $request->recommended_age,
-        'vaccine_icon' => $request->vaccine_icon,
-        'side_effects' => $request->side_effects,
+           'name' => $request->name,
+            'dose_number' => $request->dose_number,
+            'age_range_id' => $request->recommended_age,
+            'side_effects' => $request->side_effects,
+            'description' => $request->description,
+            'country_id' => $request->country,
+            'storage_requirements' => $request->storage_requirements,
+        
 
        ]);
 
@@ -102,5 +131,6 @@ class VaccineTypeController extends Controller
     
     }
 
+    
 
 }

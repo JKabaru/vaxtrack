@@ -66,7 +66,7 @@
   
                                   <h6 class="card-title">Change Password</h6>
   
-                                  <form method="POST" action={{ route('admin.update.password') }} class="forms-sample">
+                                  <form id="myForm" method="POST" action={{ route('admin.update.password') }} class="forms-sample">
                                     @csrf
 
                                       <div class="mb-3">
@@ -117,7 +117,37 @@
         </div>
 
 
-
+        <script type="text/javascript">
+          $(document).ready(function (){
+              $('#myForm').validate({
+                  rules: {
+                    new_password: {
+                          required : true,
+                      }, 
+                      
+                  },
+                  messages :{
+                    new_password: {
+                          required : 'Password should be more than  8 characters  ',
+                      }, 
+                       
+      
+                  },
+                  errorElement : 'span', 
+                  errorPlacement: function (error,element) {
+                      error.addClass('invalid-feedback');
+                      element.closest('.form-group').append(error);
+                  },
+                  highlight : function(element, errorClass, validClass){
+                      $(element).addClass('is-invalid');
+                  },
+                  unhighlight : function(element, errorClass, validClass){
+                      $(element).removeClass('is-invalid');
+                  },
+              });
+          });
+          
+      </script>
 
 
 

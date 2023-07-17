@@ -17,6 +17,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
   <!-- End fonts -->
 
+  <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 	<!-- core:css -->
 	<link rel="stylesheet" href="{{ asset('../assets/vendors/core/core.css') }}">
 	<!-- endinject -->
@@ -113,18 +114,29 @@
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script src="{{ asset('../assets/js/code/code.js')}}"></script>
-
+<script src="{{ asset('../assets/js/code/validate.min.js')}}"></script>
 
 	<!-- Plugin js for this page -->
 <script src="{{ asset('../assets/vendors/datatables.net/jquery.dataTables.js')}}"></script>
 <script src="{{ asset('../assets/vendors/datatables.net-bs5/dataTables.bootstrap5.js')}}"></script>
   <!-- End plugin js for this page -->
 
-  
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <!-- Custom js for this page -->
 <script src="{{ asset('../assets/js/data-table.js')}}"></script>
   <!-- End custom js for this page -->
+
+  <!-- Custom js for this page -->
+  <script src="{{ asset ('../../../assets/js/apexcharts-dark.js')}}"></script>
+	<!-- End custom js for this page -->
+	
+
+	
+	
+
+
 
 
 </body>

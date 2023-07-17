@@ -21,7 +21,7 @@
   
                                   <h6 class="card-title">Add User</h6>
   
-                                  <form method="POST" action={{ route('store.userType') }} class="forms-sample">
+                                  <form id="myForm" method="POST" action={{ route('store.userType') }} class="forms-sample">
                                     @csrf
 
                                       <div class="mb-3">
@@ -46,12 +46,12 @@
 
                                     
 
-                                    <div class="mb-3">
+                                    <div class="form-group mb-3">
                                         <label for="exampleInputUsername1" class="form-label">Password</label>
                                         <input type="password" name="password" class="form-control @error('password') is-invalid @enderror"  
                                           
                                         id="password" autocomplete="off" >
-                                        @error('new_password')
+                                        @error('password')
                                         <span class="text-danger">{{ $message }}</span>
                                         @enderror
                                     </div>
@@ -89,7 +89,37 @@
         </div>
 
 
-
+        <script type="text/javascript">
+          $(document).ready(function (){
+              $('#myForm').validate({
+                  rules: {
+                    password: {
+                          required : true,
+                      }, 
+                      
+                  },
+                  messages :{
+                    password: {
+                          required : 'Password should be more than  8 characters  ',
+                      }, 
+                       
+      
+                  },
+                  errorElement : 'span', 
+                  errorPlacement: function (error,element) {
+                      error.addClass('invalid-feedback');
+                      element.closest('.form-group').append(error);
+                  },
+                  highlight : function(element, errorClass, validClass){
+                      $(element).addClass('is-invalid');
+                  },
+                  unhighlight : function(element, errorClass, validClass){
+                      $(element).removeClass('is-invalid');
+                  },
+              });
+          });
+          
+      </script>
 
 
 

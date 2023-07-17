@@ -49,7 +49,7 @@
 
                                     <div class="mb-3">
                                         <label for="exampleInputUsername1" class="form-label">Status</label>
-                                        <select id="role" name="role" class="form-control">
+                                        <select id="status" name="status" class="form-control">
                                             <option value="Active" @if ($types->status === 'Active' || $types->status === 'active') selected @endif>Active</option>
                                             <option   value="Pending" @if ($types->status === 'pending' || $types->status === 'Pending') selected @endif>Pending</option>
                                             <option value="Disabled" @if ($types->status === 'disabled' || $types->status === 'Disabled') selected @endif>Disabled</option>

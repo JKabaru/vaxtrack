@@ -8,6 +8,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
 
 class UserController extends Controller
@@ -127,6 +128,45 @@ class UserController extends Controller
           return back()->with($notification);
 
      }
+
+      ///notifications
+      public function ViewNotifications()
+      {
+          // Retrieve all notifications for the authenticated user
+          $userId = auth()->id();
+      $notifications = DB::table('notifications')
+          ->where('notifiable_type', User::class)
+          ->where('notifiable_id', $userId)
+          ->paginate(10);
+  
+  
+          
+  
+          // Pass the notifications to the view
+          return view('user.notifications.index');
+      }
+  
+      public function MarkAsRed($id)
+      {
+  
+       if($id)
+       {
+            auth()->user()->unreadNotifications->where('id', $id)->MarkAsRead();
+       }
+  
+       return back();
+  
+  
+      }
+
+
+
+           public function markAllAsRed()
+          {
+          auth()->user()->unreadNotifications->markAsRead();
+          
+          return back();
+          }
 
 }
 

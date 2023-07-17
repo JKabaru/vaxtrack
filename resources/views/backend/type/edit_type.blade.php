@@ -38,36 +38,73 @@
                                       </div>
 
                                       <div class="mb-3">
-                                        <label for="exampleInputUsername1" class="form-label">Recommended age</label>
-                                        <input type="text" name="recommended_age" class="form-control @error('recommended_age') is-invalid @enderror"  
-                                          
-                                        value="{{ $types->recommended_age}}">
-                                        @error('recommended_age')
-                                        <span class="text-danger">{{ $message }}</span>
-                                        @enderror
+                                        <label for="exampleInputUsername1" class="form-label">Age Groups</label>
+                                        <select id="status" name="recommended_age" class="form-control">
+                                            <option selected disabled>Select Age group</option>
+                                            @foreach ($ageranges as $agerange)
+                                                <option value="{{ $agerange->id }}" {{ $agerange->id === $types->age_range_id ? 'selected' : '' }}>
+                                                    {{ $agerange->StartAge }} months - {{ $agerange->EndAge }} months
+                                                </option>
+                                            @endforeach
+                                        </select>
                                     </div>
-
-                                    <div class="mb-3">
-                                        <label for="exampleInputUsername1" class="form-label">Side effects</label>
-                                        <input type="text" name="side_effects" class="form-control @error('side_effects') is-invalid @enderror"  
-                                          
-                                        value="{{ $types->side_effects}}">
-                                        @error('side_effects')
-                                        <span class="text-danger">{{ $message }}</span>
-                                        @enderror
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="exampleInputUsername1" class="form-label">Vaccine icon</label>
-                                        <input type="text" name="vaccine_icon" class="form-control @error('vaccine_icon') is-invalid @enderror"  
-                                          
-                                        value="{{ $types->vaccine_icon}}">
-                                        @error('vaccine_icon')
-                                        <span class="text-danger">{{ $message }}</span>
-                                        @enderror
-                                    </div>
-
                                     
+
+
+                                    <div class="mb-3">
+                                      <label for="exampleInputUsername1" class="form-label">Dose number</label>
+                                      <input type="text" name="dose_number" class="form-control @error('dose_number') is-invalid @enderror"  
+                                        
+                                      value="{{ $types->dose_number}}">
+                                      @error('dose_number')
+                                      <span class="text-danger">{{ $message }}</span>
+                                      @enderror
+                                  </div>
+
+                                  <div class="mb-3">
+                                    <label for="exampleInputUsername1" class="form-label">Description</label>
+                                    <input type="text" name="description" class="form-control @error('description') is-invalid @enderror"  
+                                      
+                                    value="{{ $types->description}}">
+                                    @error('description')
+                                    <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+
+                                <div class="mb-3">
+                                  <label for="exampleInputUsername1" class="form-label">Side Effects </label>
+                                  <input type="text" name="side_effects" class="form-control @error('side_effects') is-invalid @enderror"  
+                                    
+                                  value="{{ $types->side_effects}}">
+                                  @error('side_effects')
+                                  <span class="text-danger">{{ $message }}</span>
+                                  @enderror
+                              </div>
+
+                              <div class="mb-3">
+                                <label for="exampleInputUsername1" class="form-label">Storage Requirements </label>
+                                <input type="text" name="storage_requirements" class="form-control @error('storage_requirements') is-invalid @enderror"  
+                                  
+                                value="{{ $types->storage_requirements}}">
+                                @error('storage_requirements')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+
+
+                                   
+                                  <div class="mb-3">
+                                    <label for="exampleInputUsername1" class="form-label">Country</label>
+                                    <select id="status" name="country" class="form-control">
+                                        <option selected disabled>Select the Country</option>
+                                        @foreach ($countries as $country)
+                                            <option value="{{ $country->id }}" {{ $country->id === $types->country_id ? 'selected' : '' }}>
+                                                {{ $country->CountryName }} 
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                
 
 
                                       

@@ -7,6 +7,7 @@ use Illuminate\Auth\Events\Verified;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class VerificationController extends Controller
 {
@@ -27,15 +28,15 @@ class VerificationController extends Controller
     event(new Verified($request->user()));
 
 
-    
+    $user = Auth::user();
 
-        if ($request->user()->role === 'admin') {
+        if ($user->role === 'admin') {
             $url = '/admin/dashboard';
-        } elseif ($request->user()->role === 'doctor') {
+        } elseif ($user->role === 'doctor') {
             $url = '/doctor/dashboard';
-        } elseif ($request->user()->role === 'parent') {
+        } elseif ($user->role === 'parent') {
             $url = '/parent/dashboard';
-        } elseif ($request->user()->role === 'user') {
+        } elseif ($user->role === 'user') {
             $url = '/user/dashboard';
         } 
 
@@ -50,6 +51,10 @@ class VerificationController extends Controller
 
   
 }
+
+
+
+
 
 
     /**

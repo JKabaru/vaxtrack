@@ -21,21 +21,23 @@
           <tr>
             <th>Name</th>
             <th>Recommended age</th>
-            <th>side effects</th>
-            <th>Vaccine Icon</th>
+            <th>Dosage </th>
+            <th>Country </th>
             <th>Action</th>
             
           </tr>
         </thead>
         <tbody>
+         
+
             @foreach($types as $key => $item)
                 <tr>
                     
-                    <td>{{ $item-> name }}</td>
-                    <td>{{ $item-> recommended_age }}</td>
-                    <td>{{ $item-> side_effects }}</td>
-                    <td>{{ $item-> vaccine_icon }}</td>
-
+                    <td>{{ $item->name }}</td>
+                    <td>{{ $item->agerange->StartAge }}months - {{ $item->agerange->EndAge }}months  <br>{{ $item->description }} </td>
+                    <td>{{ $item->dose_number }}</td>
+                    <td>{{ $item->country->CountryName }}</td>
+                   
                   <td>
                     <a href="{{ route('edit.type', $item->id)}}" class="btn btn-inverse-warning">Edit</a>
                     <a href="{{ route('delete.type', $item->id)}}" class="btn btn-inverse-danger" id = "delete">Delete</a>

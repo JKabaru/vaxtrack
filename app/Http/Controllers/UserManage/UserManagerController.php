@@ -8,6 +8,8 @@ use App\Models\UserManagement;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use PhpParser\Builder\Property;
+use Illuminate\Support\Facades\Hash;
+use App\Models\User;
 
 
 class UserManagerController extends Controller
@@ -20,6 +22,8 @@ class UserManagerController extends Controller
         return view('usermanagement.user_all_type',compact('types'));
     }
 
+    
+
     public function UserAddType()
     {
                 return view('usermanagement.user_add_type');
@@ -31,7 +35,7 @@ class UserManagerController extends Controller
         $request -> validate([
             'name' => 'required|max:200',
             'email' => 'required|unique:users|min:8',
-            'password' => 'required',
+            'password' => 'required|min:8',
             'role' => 'required'
 
        ]);
@@ -40,7 +44,7 @@ class UserManagerController extends Controller
 
         'name' => $request->name,
         'email' => $request->email,
-        'password' => $request->password,
+        'password' => Hash::make($request->password), 
         'role' => $request->role,
 
        ]);
@@ -73,8 +77,9 @@ class UserManagerController extends Controller
        UserManagement::findOrFail($pid)->update([
 
         'name' => $request->name,
-        'email' => $request->recommended_age,
-        'role' => $request->vaccine_icon,
+        'email' => $request->email,
+        'status' => $request->status,
+        'role' => $request->role,
         
 
        ]);
@@ -120,8 +125,14 @@ class UserManagerController extends Controller
 
     $types = $query->latest()->get();
 
-    return view('usermanagement.user_all_type', compact('types'));
+   return view('usermanagement.user_all_type', compact('types'));
+
 }
 
+public function UserActivationType()
+{
+    $users = User::where('status', 'disabled')->get();
+    return view('usermanagement.disabled_users',compact('users'));
+}
 
 }

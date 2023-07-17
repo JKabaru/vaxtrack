@@ -21,7 +21,7 @@
   
                                   <h6 class="card-title">Add Vaccine</h6>
   
-                                  <form method="POST" action={{ route('store.vaccineType') }} class="forms-sample">
+                                  <form id="myForm" method="POST" action={{ route('store.vaccineType') }} class="forms-sample">
                                     @csrf
 
                                       <div class="mb-3">
@@ -35,34 +35,68 @@
                                       </div>
 
                                       <div class="mb-3">
-                                        <label for="exampleInputUsername1" class="form-label">Recommended age</label>
-                                        <input type="text" name="recommended_age" class="form-control @error('recommended_age') is-invalid @enderror"  
+                                        <label for="exampleInputUsername1" class="form-label">Age Groups</label>
+                                        <select id="status" name="recommended_age" class="form-control">
+                                            <option selected disabled>Select Age group</option>
+                                            @foreach ($ageranges as $agerange)
+                                                <option value="{{ $agerange->id }}"> {{ $agerange->StartAge }} months - {{ $agerange->EndAge }} months</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                      <div class="mb-3">
+                                        <label for="exampleInputUsername1" class="form-label">Dosage</label>
+                                        <input type="text" name="dose_number" class="form-control @error('dose_number') is-invalid @enderror"  
                                           
                                          >
-                                        @error('recommended_age')
+                                        @error('dose_number')
                                         <span class="text-danger">{{ $message }}</span>
                                         @enderror
                                     </div>
 
-                                    <div class="mb-3">
-                                        <label for="exampleInputUsername1" class="form-label">Side effects</label>
-                                        <input type="text" name="side_effects" class="form-control @error('side_effects') is-invalid @enderror"  
-                                          
-                                         >
-                                        @error('side_effects')
-                                        <span class="text-danger">{{ $message }}</span>
-                                        @enderror
-                                    </div>
 
                                     <div class="mb-3">
-                                        <label for="exampleInputUsername1" class="form-label">Vaccine icon</label>
-                                        <input type="text" name="vaccine_icon" class="form-control @error('vaccine_icon') is-invalid @enderror"  
-                                          
-                                         >
-                                        @error('vaccine_icon')
-                                        <span class="text-danger">{{ $message }}</span>
-                                        @enderror
-                                    </div>
+                                      <label for="exampleInputUsername1" class="form-label">Description</label>
+                                      <input type="text" name="description" class="form-control @error('description') is-invalid @enderror"  
+                                        
+                                       >
+                                      @error('description')
+                                      <span class="text-danger">{{ $message }}</span>
+                                      @enderror
+                                  </div>
+
+                                  <div class="mb-3">
+                                    <label for="exampleInputUsername1" class="form-label">Side Effects </label>
+                                    <input type="text" name="side_effects" class="form-control @error('side_effects') is-invalid @enderror"  
+                                      
+                                     >
+                                    @error('side_effects')
+                                    <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+
+                                <div class="mb-3">
+                                  <label for="exampleInputUsername1" class="form-label">Storage Requirements </label>
+                                  <input type="text" name="storage_requirements" class="form-control @error('storage_requirements') is-invalid @enderror"  
+                                    
+                                   >
+                                  @error('storage_requirements')
+                                  <span class="text-danger">{{ $message }}</span>
+                                  @enderror
+                              </div>
+
+                              <div class="mb-3">
+                                <label for="exampleInputUsername1" class="form-label">Country</label>
+                                <select id="status" name="country" class="form-control">
+                                    <option selected disabled>Select country</option>
+                                    @foreach ($countries as $country)
+                                        <option value="{{ $country->id }}">{{ $country->CountryName }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            
+
+                                    
 
                                     
 
@@ -86,6 +120,61 @@
     </div>
 
         </div>
+
+        <script type="text/javascript">
+          $(document).ready(function (){
+              $('#myForm').validate({
+                  rules: {
+                    name: {
+                          required : true,
+                      }, 
+                      recommended_age: {
+                          required : true,
+                      }, 
+                      country: {
+                          required : true,
+                      }, 
+                      dose_number: {
+                          required : true,
+                      }, 
+                      side_effects: {
+                          required : true,
+                      }, 
+                      
+                  },
+
+
+                  messages :{
+                    name: {
+                          required : 'name is required ',
+                      }, 
+
+
+                      country: {
+                          required : 'please select the country ',
+                      }, 
+
+                      recommended_age: {
+                          required : ' please select the age group',
+                      }, 
+                       
+      
+                  },
+                  errorElement : 'span', 
+                  errorPlacement: function (error,element) {
+                      error.addClass('invalid-feedback');
+                      element.closest('.form-group').append(error);
+                  },
+                  highlight : function(element, errorClass, validClass){
+                      $(element).addClass('is-invalid');
+                  },
+                  unhighlight : function(element, errorClass, validClass){
+                      $(element).removeClass('is-invalid');
+                  },
+              });
+          });
+          
+      </script>
 
 
 

@@ -77,7 +77,7 @@
                     <h5 class="text-muted fw-normal mb-4">Welcome back! Log in to your account.</h5>
 
 
-                    <form class="forms-sample" method="POST" action="{{ route('login') }}">
+                    <form id="myForm" class="forms-sample" method="POST" action="{{ route('login') }}">
                         @csrf
 
                         @if (session('status'))
@@ -170,9 +170,42 @@
 	<script src="{{ asset('../../../assets/vendors/feather-icons/feather.min.js') }}"></script>
 	<script src="{{ asset('../../../assets/js/template.js') }}"></script>
 	<!-- endinject -->
+  <script src="{{ asset('../assets/js/code/validate.min.js')}}"></script>
 
 	<!-- Custom js for this page -->
 	<!-- End custom js for this page -->
+
+  <script type="text/javascript">
+    $(document).ready(function (){
+        $('#myForm').validate({
+            rules: {
+              password: {
+                    required : true,
+                }, 
+                
+            },
+            messages :{
+              password: {
+                    required : 'Password should be more than  8 characters  ',
+                }, 
+                 
+
+            },
+            errorElement : 'span', 
+            errorPlacement: function (error,element) {
+                error.addClass('invalid-feedback');
+                element.closest('.form-group').append(error);
+            },
+            highlight : function(element, errorClass, validClass){
+                $(element).addClass('is-invalid');
+            },
+            unhighlight : function(element, errorClass, validClass){
+                $(element).removeClass('is-invalid');
+            },
+        });
+    });
+    
+</script>
 
 </body>
 </html>

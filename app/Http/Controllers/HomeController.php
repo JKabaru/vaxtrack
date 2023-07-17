@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
-
-
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -16,8 +14,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-       $this->middleware('auth');
-        
+        $this->middleware('auth');
     }
 
     /**
@@ -27,8 +24,23 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $user = Auth::guard()->user();
 
-        
-        return view('home');
+        if ($user->role === 'admin') {
+            $url = '/admin/dashboard';
+        } elseif ($user->role === 'doctor') {
+            $url = '/doctor/dashboard';
+        } elseif ($user->role === 'parent') {
+            $url = '/parent/dashboard';
+        } elseif ($user->role === 'user') {
+            $url = '/user/dashboard';
+        }
+
+        $notification = [
+            'message' => 'Password Reset Successfully',
+            'alert-type' => 'success'
+        ];
+
+        return redirect()->intended($url)->with($notification);
     }
 }
