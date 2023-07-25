@@ -31,8 +31,6 @@ To install and set up VaxTrack, follow the steps below:
    ```
 
 2. Install Dependencies:
-   
-   ```
 To run this Laravel project, you need to have the following dependencies installed on your system:
 
 PHP: Laravel is built on PHP, and you'll need to have PHP installed. The project requires PHP version 7.4 or higher.
@@ -40,10 +38,11 @@ PHP: Laravel is built on PHP, and you'll need to have PHP installed. The project
 Composer: Laravel uses Composer to manage its dependencies. If you don't have Composer installed, you can download it from the official website: Composer
 
 Laravel Framework: This project relies on the Laravel framework, which is included in the project's composer.json file. After cloning the repository, run the following command to install the required packages:
+   ```
    cd vaxtrack
    composer install
    ```
-
+Database: This project uses Laravel's database component for data storage. You'll need a supported database (MySQL, PostgreSQL, SQLite, etc.) and the necessary credentials to set up the database connection. Make sure to update the .env file with your database settings.
 4. Environment Setup:
    - Create a copy of the `.env.example` file and rename it to `.env`.
    - Update the `.env` file with your database and application configurations.
